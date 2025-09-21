@@ -1,3 +1,4 @@
+import os
 menu = [
     ("Pizza", 8.5),
     ("Burger", 6.0),
@@ -42,12 +43,20 @@ while True:
         try:
             show_menu()
             item_number = int(input("Enter an item number to add : "))
-            if 1 <= item_number <= len(menu):
-                order.append(menu[item_number-1])
-                # print(f"Added {menu[item_number-1]}") this code gives ("pizza", 8.50) since we wanted to print only item without price we go into the tuple with the following code
-                print(f"Added {menu[item_number-1][0]}")
-            else:
-                print("Invalid number.")   
+            while True:
+                if 1 <= item_number <= len(menu):
+                    order.append(menu[item_number-1])
+                    # print(f"Added {menu[item_number-1]}") this code gives ("pizza", 8.50) since we wanted to print only item without price we go into the tuple with the following code
+                    os.system("clear")
+                    print(f"Added {menu[item_number-1][0]}")
+                    more_items = input("Anything else? Y|y / N|n: ")
+                    if more_items.lower() == 'y':
+                        show_menu()
+                        item_number = int(input("Enter an item number to add : "))
+                    else:
+                        break
+                else:
+                    print("Invalid number.")   
 
         except ValueError:
             print("Please enter a valid number.")
