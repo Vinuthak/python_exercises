@@ -1,3 +1,21 @@
+import json
+import os
+
+FILENAME = "contacts.json"
+
+#load contacts from file if it exists
+
+def load_contacts():
+    if os.path.exists(FILENAME):
+        with open(FILENAME, "r") as f:
+            return json.load(f)
+    return {}
+def save_contacts():
+    with open(FILENAME, "w") as f:
+        json.dump(contacts, f, indent=4)
+contacts = load_contacts()
+
+
 # Add new contacts (stores in dictionary).
 
 # View all saved contacts.
@@ -8,7 +26,6 @@
 
 # Exit option to stop the program.
 
-contacts = {}
 
 # View all saved contacts.
 def view_contacts():
@@ -21,6 +38,7 @@ def view_contacts():
 # Add new contacts (stores in dictionary).
 def add_contact(name,number):
     contacts[name] = number
+    save_contacts()
     print(f"Contact {name} with {number} is added.")
 
 # Search for a contact by name.
@@ -37,6 +55,7 @@ def update_contact(name):
     if contacts[name]:
         new_contact_number = input("Enter a new contact number: ")
         contacts[name] = new_contact_number
+        save_contacts()
         print(f"Updated {name} with {new_contact_number}")
     else:
         print("No contact with that name.")
@@ -45,6 +64,7 @@ def update_contact(name):
 def delete_contact(name):
     if name in contacts:
         contacts.pop(name)
+        save_contacts()
         print(f"Removed : {name} from contacts.")
     else:
         print("THere is no contact with that name.")
